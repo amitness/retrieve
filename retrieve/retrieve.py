@@ -49,13 +49,14 @@ def url(link, path=None):
         path = get_default_cache_path()
     target_path = os.path.join(path, file_name)
     final_path = target_path
-    if not os.path.exists(target_path):
-        print('Downloading {}'.format(link))
+    is_zip = file_name.endswith('.zip')
+    if is_zip:
+        extract_folder = file_name.replace('.zip', '')
+        extracted_path = os.path.join(path, extract_folder)
+        final_path = extracted_path
+    if not os.path.exists(final_path):
         download(link, target_path)
-        is_zip = file_name.endswith('.zip')
         if is_zip:
-            extract_folder = file_name.replace('.zip', '')
-            extracted_path = os.path.join(path, extract_folder)
             os.makedirs(extracted_path, exist_ok=True)
             extract_zip(target_path, extracted_path)
             final_path = extracted_path
