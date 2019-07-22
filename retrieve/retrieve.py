@@ -6,13 +6,16 @@ from zipfile import ZipFile
 DEFAULT_CACHE_FOLDER = '.retrieve'
 CHUNK_SIZE = 1024
 
+
 def get_file_name(link):
     return link.split('/')[-1]
+
 
 def get_file_size(link):
     response = requests.head(link)
     content_length = int(response.headers.get('Content-Length'))
     return content_length
+
 
 def get_default_cache_path():
     HOME_DIR = os.path.expanduser('~')
@@ -20,9 +23,11 @@ def get_default_cache_path():
     os.makedirs(cache_dir, exist_ok=True)
     return cache_dir
 
+
 def extract_zip(source, destination):
     zip_file = ZipFile(source)
     zip_file.extractall(destination)
+
 
 def download(link, destination):
     file_name = get_file_name(link)
