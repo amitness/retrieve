@@ -5,7 +5,7 @@
 No-frills library to download pre-trained models, cache it and return the local path.
 
 ## Installation
-```
+```bash
 pip install -U retrieve
 ```
 
@@ -16,7 +16,7 @@ The idea with this library is automate this and make using pre-trained models as
 
 ## Usage
 Pass the pre-trained model path to the retrieve.url(...) method and it will return you a filepath to the file. If the file is not already download, it is fetched and shows a progress of download.
-```
+```python
 import retrieve
 
 # URL for the pre-trained model
