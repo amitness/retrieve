@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='retrieve',
-    version='0.0.4',
+    version='0.0.5',
     license='MIT',
     description='Retrieve pre-trained models and cache it locally',
     long_description=open('README.md').read(),
