@@ -6,6 +6,7 @@ setup(
     license='MIT',
     description='Retrieve pre-trained models and cache it locally',
     long_description=open('README.md').read(),
+    long_description_content_type="text/markdown",
     classifiers=[
         'Programming Language :: Python :: 3'
     ],
