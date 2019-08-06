@@ -8,12 +8,16 @@ CHUNK_SIZE = 1024
 
 
 def get_file_name(link):
-    return link.split('/')[-1]
-
+    file_name = link.split('/')[-1]
+    file_name = file_name.split('?')[0]
+    return file_name
 
 def get_file_size(link):
     response = requests.head(link)
-    content_length = int(response.headers.get('Content-Length'))
+    try:
+        content_length = int(response.headers.get('Content-Length'))
+    except Exception:
+        content_length = None
     return content_length
 
 
@@ -32,21 +36,27 @@ def extract_zip(source, destination):
 def download(link, destination):
     file_name = get_file_name(link)
     file_size = get_file_size(link)
-    progress_bar = tqdm(total=file_size, unit='B', unit_scale=True, desc=file_name)
+    if file_size:
+        progress_bar = tqdm(total=file_size, unit='B', unit_scale=True, desc=file_name)
     req = requests.get(link, stream=True)
     with open(destination, 'ab') as fp:
         for chunk in req.iter_content(chunk_size=CHUNK_SIZE):
             if chunk:
                 fp.write(chunk)
-                progress_bar.update(CHUNK_SIZE)
-    progress_bar.close()
-    return file_size
+                if file_size:
+                    progress_bar.update(CHUNK_SIZE)
+    if file_size:
+        progress_bar.close()
 
 
 def url(link, path=None):
     file_name = get_file_name(link)
     if not path:
         path = get_default_cache_path()
+    else:
+        # Expand any '~' used in path
+        path = os.path.expanduser(path)
+        os.makedirs(path, exist_ok=True)
     target_path = os.path.join(path, file_name)
     final_path = target_path
     is_zip = file_name.endswith('.zip')
