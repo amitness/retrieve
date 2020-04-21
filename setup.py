@@ -1,8 +1,9 @@
 from setuptools import setup, find_packages
+from retrieve import __VERSION__
 
 setup(
     name='retrieve',
-    version='0.0.5',
+    version=__VERSION__,
     license='MIT',
     description='Retrieve pre-trained models and cache it locally',
     long_description=open('README.md').read(),
