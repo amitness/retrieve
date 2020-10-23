@@ -1,4 +1,4 @@
-from tqdm import tqdm
+from tqdm.auto import tqdm
 import requests
 import os
 from zipfile import ZipFile
